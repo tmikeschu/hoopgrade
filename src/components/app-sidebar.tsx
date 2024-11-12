@@ -18,6 +18,8 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import Link from "next/link";
 
 const data = {
   navMain: [
@@ -40,12 +42,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <div className="flex items-center gap-2 px-2">
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <GalleryVerticalEnd className="size-4" />
-              </div>
-              <div className="flex flex-col gap-0.5 leading-none">
-                <span className="font-semibold">Hoopgrade</span>
+            <div className="flex items-center gap-2 ">
+              <Link
+                href="/"
+                className="flex items-center gap-2 px-2 hover:bg-sidebar-accent px-2 py-1 rounded"
+              >
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                  <GalleryVerticalEnd className="size-4" />
+                </div>
+                <div className="flex flex-col gap-0.5 leading-none">
+                  <span className="font-semibold">Hoopgrade</span>
+                </div>
+              </Link>
+              <div className="ml-auto">
+                <ThemeToggle />
               </div>
             </div>
           </SidebarMenuItem>
