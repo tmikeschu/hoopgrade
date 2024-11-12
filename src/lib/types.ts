@@ -448,9 +448,6 @@ export interface GameEvent {
   };
 }
 
-// Root interface for the entire payload
-export interface NBAGameData {}
-
 // Merge all status types
 export type GameStatus =
   | "scheduled"
