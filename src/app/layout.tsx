@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import QueryProvider from "./queryClient";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,8 +19,6 @@ export const metadata: Metadata = {
   description: "Choose your game wisely",
 };
 
-const queryClient = new QueryClient();
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,9 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );
