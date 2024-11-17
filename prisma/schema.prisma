@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model NBAGame {
+model NbaGame {
   id   String   @id @default(cuid())
   json Json
   date DateTime
