@@ -9,16 +9,14 @@ export default function Scoreboard() {
   const router = useRouter();
 
   return (
-    <div>
-      <div className="flex flex-1 flex-col gap-4 p-4">
-        <Calendar
-          mode="single"
-          onSelect={(date) =>
-            date && router.push(`/scoreboard/${format(date, "yyyyMMdd")}`)
-          }
-          initialFocus
-        />
-      </div>
+    <div className="flex flex-1 flex-col gap-4 p-4">
+      <Calendar
+        mode="single"
+        onSelect={(date) =>
+          date && router.push(`/scoreboard/${format(date, "yyyyMMdd")}`)
+        }
+        initialFocus
+      />
     </div>
   );
 }
