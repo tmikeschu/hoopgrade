@@ -1,7 +1,6 @@
 // https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard
 
 import { Event, GameEvent, League, Logo } from "@/lib/types";
-import { useQuery } from "@tanstack/react-query";
 
 export const BASE_ESPN_API_URL = "https://site.web.api.espn.com";
 
@@ -49,13 +48,6 @@ export const ScoreboardQueryBuilder = {
   },
 };
 
-export const useScoreboardQuery = (params: Partial<ScoreboardParams> = {}) => {
-  return useQuery({
-    queryKey: ScoreboardQueryBuilder.getQueryKey(params),
-    queryFn: ScoreboardQueryBuilder.getQueryFn(params),
-  });
-};
-
 export type SummaryParams = {
   region?: string;
   lang?: string;
@@ -100,11 +92,4 @@ export const SummaryQueryBuilder = {
     );
     return response.json() as Promise<SummaryResponse>;
   },
-};
-
-export const useSummaryQuery = (params: Partial<SummaryParams>) => {
-  return useQuery({
-    queryKey: SummaryQueryBuilder.queryKey(params),
-    queryFn: () => SummaryQueryBuilder.queryFn(params),
-  });
 };

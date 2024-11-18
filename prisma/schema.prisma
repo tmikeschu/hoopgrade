@@ -13,10 +13,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model NbaGame {
-  id   String   @id @default(cuid())
+model ScoreboardSummary {
+  id   String @id @default(cuid())
   json Json
-  date DateTime
+  date String @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

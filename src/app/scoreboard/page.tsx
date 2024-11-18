@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import {
@@ -14,11 +12,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import dynamic from "next/dynamic";
-
-const Scoreboard = dynamic(() => import("@/components/scoreboard"), {
-  ssr: false,
-});
+import Scoreboard from "@/components/scoreboard";
 
 export default function ScoreboardRoute() {
   return (
