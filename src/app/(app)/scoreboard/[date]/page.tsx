@@ -8,6 +8,7 @@ import AppBreadcrumbs from "@/components/app-breadcrumbs";
 import { validateNBAScoreboard, Event } from "@/lib/types/nbaScoreboard";
 import { toResult } from "@/lib/toResult";
 import { match, P } from "ts-pattern";
+import { Badge } from "@/components/ui/badge";
 
 const getScoreboard = async (date?: string) => {
   let data = await prisma.scoreboardSummary.findUnique({
@@ -88,8 +89,14 @@ const ScoreboardEvent = ({
   event,
 }: React.PropsWithChildren<{ event: Event }>) => {
   return (
-    <div className="aspect-video h-12 w-full rounded-lg p-2 bg-muted/50 flex items-center">
+    <div className="aspect-video h-12 w-full rounded-lg p-2 bg-muted/50 flex gap-1 items-center justify-between">
       <TypographyLarge>{event.name}</TypographyLarge>
+
+      {event.status.type.completed ? (
+        <Badge variant="secondary">Completed</Badge>
+      ) : (
+        <Badge variant="default">In Progress</Badge>
+      )}
     </div>
   );
 };

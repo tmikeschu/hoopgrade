@@ -4,7 +4,7 @@ import { z } from "zod";
 const LinkSchema = z.object({
   rel: z.array(z.string()),
   href: z.string().url(),
-  text: z.string(),
+  text: z.string().optional(),
   isExternal: z.boolean().optional(),
   isPremium: z.boolean().optional(),
 });
@@ -99,7 +99,7 @@ const CompetitorSchema = z.object({
   homeAway: z.string(),
   team: TeamSchema,
   score: z.string(),
-  linescores: z.array(z.object({ value: z.number() })),
+  linescores: z.array(z.object({ value: z.number() })).optional(),
   statistics: z.array(StatisticSchema),
   leaders: z.array(
     z.object({
@@ -204,13 +204,17 @@ export const NBAScoreboardSchema = z.object({
       calendar: z.array(z.string()),
     })
   ),
-  season: z.object({
-    type: z.number(),
-    year: z.number(),
-  }),
-  day: z.object({
-    date: z.string(),
-  }),
+  season: z
+    .object({
+      type: z.number(),
+      year: z.number(),
+    })
+    .optional(),
+  day: z
+    .object({
+      date: z.string(),
+    })
+    .optional(),
   events: z.array(EventSchema),
 });
 
