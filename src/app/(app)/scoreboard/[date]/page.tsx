@@ -9,7 +9,7 @@ import { validateNBAScoreboard, Event } from "@/lib/types/nbaScoreboard";
 import { toResult } from "@/lib/toResult";
 import { match, P } from "ts-pattern";
 import { Badge } from "@/components/ui/badge";
-import { CheckIcon, LoaderCircleIcon } from "lucide-react";
+import { CheckIcon, CircleDotIcon } from "lucide-react";
 
 const getScoreboard = async (date?: string) => {
   const data = await prisma.scoreboardSummary.findUnique({
@@ -102,7 +102,7 @@ const ScoreboardEvent = ({
         ) : (
           <>
             <Badge variant="default">In Progress</Badge>
-            <LoaderCircleIcon className="animate-spin" />
+            <CircleDotIcon className="animate-pulse text-green-500" />
           </>
         )}
       </div>
