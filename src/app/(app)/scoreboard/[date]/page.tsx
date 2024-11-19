@@ -1,11 +1,11 @@
 import * as React from "react";
 import prisma from "@/lib/prisma";
 import { format } from "date-fns";
-import { Event } from "@/lib/types";
 import { TypographyLarge } from "@/components/ui/typography";
 import { ScoreboardQueryBuilder, ScoreboardResponse } from "@/lib/nbaApi";
 import { InputJsonValue } from "@prisma/client/runtime/library";
 import AppBreadcrumbs from "@/components/app-breadcrumbs";
+import { validateNBAScoreboard, Event } from "@/lib/types/nbaScoreboard";
 
 const getScoreboard = async (date?: string) => {
   let data = await prisma.scoreboardSummary.findUnique({
@@ -14,10 +14,11 @@ const getScoreboard = async (date?: string) => {
   });
 
   if (!data && date) {
+    // check for all completed games
     data = await fetchAndSaveScoreboardSummary(date);
   }
 
-  const scoreboard = data?.json as unknown as ScoreboardResponse;
+  const scoreboard = validateNBAScoreboard(data?.json);
 
   return scoreboard;
 };

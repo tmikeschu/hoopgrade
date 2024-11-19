@@ -3041,6 +3041,7 @@ __metadata:
     react: "npm:19.0.0-rc-66855b96-20241106"
     react-day-picker: "npm:8.10.1"
     react-dom: "npm:19.0.0-rc-66855b96-20241106"
+    space-monad: "npm:^1.0.0"
     tailwind-merge: "npm:^2.5.4"
     tailwindcss: "npm:^3.4.1"
     tailwindcss-animate: "npm:^1.0.7"
@@ -4837,6 +4838,13 @@ __metadata:
   version: 1.2.1
   resolution: "source-map-js@npm:1.2.1"
   checksum: 10c0/7bda1fc4c197e3c6ff17de1b8b2c20e60af81b63a52cb32ec5a5d67a20a7d42651e2cb34ebe93833c5a2a084377e17455854fee3e21e7925c64a51b6a52b0faf
+  languageName: node
+  linkType: hard
+
+"space-monad@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "space-monad@npm:1.0.0"
+  checksum: 10c0/9b40f00d097f0c0c6dd6291892be2302fd9bc515ba19d1eea1af156371eaf8d4234d1acf4edd4f07c1362919224172dcf787e58b4f5b3ae8a0c9b84b2e52078c
   languageName: node
   linkType: hard
 

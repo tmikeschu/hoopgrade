@@ -1,6 +1,7 @@
 // https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard
 
-import { Event, GameEvent, League, Logo } from "@/lib/types";
+import { NBAScoreboard } from "@/lib/types/nbaScoreboard";
+import { NBASummary } from "@/lib/types/nbaSummary";
 
 export const BASE_ESPN_API_URL = "https://site.web.api.espn.com";
 
@@ -17,17 +18,7 @@ export type ScoreboardParams = {
   tz: string;
 };
 
-export interface ScoreboardResponse {
-  leagues: League[];
-  season: {
-    type: number;
-    year: number;
-  };
-  day: {
-    date: string;
-  };
-  events: Event[];
-}
+export type ScoreboardResponse = NBAScoreboard;
 
 export const SCOREBOARD_PATH = "/sports/basketball/nba/scoreboard";
 
@@ -55,24 +46,7 @@ export type SummaryParams = {
   event: number;
 };
 
-export type SummaryResponse = {
-  sports: {
-    id: string;
-    uid: string;
-    name: string;
-    slug: string;
-    logos: Logo[];
-    leagues: {
-      id: string;
-      uid: string;
-      name: string;
-      abbreviation: string;
-      shortName: string;
-      slug: string;
-      events: GameEvent[];
-    }[];
-  }[];
-};
+export type SummaryResponse = NBASummary;
 
 export const SUMMARY_PATH = "/sports/basketball/nba/summary";
 
