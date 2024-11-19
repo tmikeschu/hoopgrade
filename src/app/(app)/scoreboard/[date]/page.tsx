@@ -9,7 +9,7 @@ import { validateNBAScoreboard, Event } from "@/lib/types/nbaScoreboard";
 import { toResult } from "@/lib/toResult";
 import { match, P } from "ts-pattern";
 import { Badge } from "@/components/ui/badge";
-import { CheckIcon, CircleDotIcon } from "lucide-react";
+import { CheckIcon, ExternalLinkIcon } from "lucide-react";
 import { TZDate } from "@date-fns/tz";
 
 const getScoreboard = async (date?: string) => {
@@ -96,21 +96,36 @@ export default async function ScoreboardDate({
 const ScoreboardEvent = ({
   event,
 }: React.PropsWithChildren<{ event: Event }>) => {
+  console.log(event);
   return (
     <div className="aspect-video h-12 w-full rounded-lg p-2 bg-muted/50 flex gap-1 items-center justify-between">
-      <TypographyLarge>{event.name}</TypographyLarge>
+      <TypographyLarge>
+        <a
+          href={`https://www.espn.com/nba/game/_/gameId/${event.id}`}
+          target="_blank"
+          rel="noreferrer"
+          className="hover:underline group"
+        >
+          <div className="flex gap-1 items-center">
+            <span>{event.name}</span>
+            <ExternalLinkIcon
+              className="group-hover:opacity-100 opacity-0 transition-opacity"
+              size={16}
+            />
+          </div>
+        </a>
+      </TypographyLarge>
 
       <div className="flex gap-1 items-center">
         {event.status.type.completed ? (
-          <>
-            <Badge variant="secondary">Completed</Badge>
-            <CheckIcon />
-          </>
+          <Badge variant="secondary" className="flex gap-1 items-center">
+            <span>Completed</span>
+            <CheckIcon size={16} className="text-green-500" />
+          </Badge>
         ) : (
-          <>
-            <Badge variant="default">In Progress</Badge>
-            <CircleDotIcon className="animate-pulse text-green-500" />
-          </>
+          <Badge variant="default" className="animate-pulse">
+            In Progress
+          </Badge>
         )}
       </div>
     </div>
