@@ -1,6 +1,6 @@
 import * as React from "react";
 import prisma from "@/lib/prisma";
-import { format } from "date-fns";
+import { format, parse, isValid } from "date-fns";
 import { TypographyLarge } from "@/components/ui/typography";
 import { ScoreboardQueryBuilder } from "@/lib/nbaApi";
 import { InputJsonValue } from "@prisma/client/runtime/library";
@@ -10,6 +10,7 @@ import { toResult } from "@/lib/toResult";
 import { match, P } from "ts-pattern";
 import { Badge } from "@/components/ui/badge";
 import { CheckIcon, CircleDotIcon } from "lucide-react";
+import { TZDate } from "@date-fns/tz";
 
 const getScoreboard = async (date?: string) => {
   const data = await prisma.scoreboardSummary.findUnique({
@@ -58,23 +59,29 @@ const fetchAndSaveScoreboardSummary = async (date: string) => {
   });
 };
 
+const PARSE_DATE_FORMAT = "yyyyMMdd";
+const DATE_FORMAT = "MMMM d, yyyy";
+
 export default async function ScoreboardDate({
   params,
 }: {
   params: Promise<{ date: string }>;
 }) {
-  const date = (await params).date;
-  if (!date) throw new Error("Invalid date format");
+  const dateParam = (await params).date;
+  if (!dateParam || !dateParam.match(/^\d{8}$/))
+    throw new Error("Invalid date format");
 
-  const data = (await getScoreboard(date)).events;
+  const data = (await getScoreboard(dateParam)).events;
+
+  const date = parse(dateParam, PARSE_DATE_FORMAT, new TZDate());
+  if (!isValid(date)) {
+    throw new Error("Invalid date format");
+  }
 
   return (
     <>
       <AppBreadcrumbs
-        page={format(
-          new Date(date.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3")),
-          "MMMM d, yyyy"
-        )}
+        page={format(date, DATE_FORMAT)}
         links={[{ label: "Scoreboard", href: "/scoreboard" }]}
       />
       <div className="flex flex-1 flex-col gap-4 p-4">
