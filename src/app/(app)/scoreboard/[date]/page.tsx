@@ -99,22 +99,18 @@ const ScoreboardEvent = ({
   console.log(event);
   return (
     <div className="aspect-video h-12 w-full rounded-lg p-2 bg-muted/50 flex gap-1 items-center justify-between">
-      <TypographyLarge>
+      <div className="flex gap-1 items-center">
+        <TypographyLarge>{event.name}</TypographyLarge>
         <a
           href={`https://www.espn.com/nba/game/_/gameId/${event.id}`}
           target="_blank"
+          aria-label="View on ESPN"
           rel="noreferrer"
-          className="hover:underline group"
+          className="hover:text-gray-500 transition-colors"
         >
-          <div className="flex gap-1 items-center">
-            <span>{event.name}</span>
-            <ExternalLinkIcon
-              className="group-hover:opacity-100 opacity-0 transition-opacity"
-              size={16}
-            />
-          </div>
+          <ExternalLinkIcon size={16} />
         </a>
-      </TypographyLarge>
+      </div>
 
       <div className="flex gap-1 items-center">
         {event.status.type.completed ? (
