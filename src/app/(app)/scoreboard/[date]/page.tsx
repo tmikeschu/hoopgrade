@@ -6,6 +6,8 @@ import { ScoreboardQueryBuilder, ScoreboardResponse } from "@/lib/nbaApi";
 import { InputJsonValue } from "@prisma/client/runtime/library";
 import AppBreadcrumbs from "@/components/app-breadcrumbs";
 import { validateNBAScoreboard, Event } from "@/lib/types/nbaScoreboard";
+import { toResult } from "@/lib/toResult";
+import { match, P } from "ts-pattern";
 
 const getScoreboard = async (date?: string) => {
   let data = await prisma.scoreboardSummary.findUnique({
@@ -13,20 +15,44 @@ const getScoreboard = async (date?: string) => {
     where: { date },
   });
 
-  if (!data && date) {
-    // check for all completed games
-    data = await fetchAndSaveScoreboardSummary(date);
-  }
+  const existingScoreboard = toResult(() =>
+    validateNBAScoreboard(data?.json)
+  ).fold(
+    () => undefined,
+    (s) => s
+  );
+  const allComplete =
+    existingScoreboard?.events.every((e) => e.status.type.completed) ?? false;
 
-  const scoreboard = validateNBAScoreboard(data?.json);
+  const scoreboard = await match({
+    existingScoreboard,
+    allComplete,
+    date,
+  })
+    .with(
+      { existingScoreboard: P.nonNullable, allComplete: true },
+      ({ existingScoreboard }) => existingScoreboard
+    )
+    .with(
+      { date: P.string },
+      async ({ date }) =>
+        await fetchAndSaveScoreboardSummary(date).then((s) =>
+          validateNBAScoreboard(s.json)
+        )
+    )
+    .otherwise(() => {
+      throw new Error("No date provided");
+    });
 
   return scoreboard;
 };
 
 const fetchAndSaveScoreboardSummary = async (date: string) => {
   const data = await ScoreboardQueryBuilder.getQueryFn({ dates: date })();
-  return prisma.scoreboardSummary.create({
-    data: { date, json: data as unknown as InputJsonValue },
+  return prisma.scoreboardSummary.upsert({
+    where: { date },
+    create: { date, json: data as unknown as InputJsonValue },
+    update: { json: data as unknown as InputJsonValue },
   });
 };
 

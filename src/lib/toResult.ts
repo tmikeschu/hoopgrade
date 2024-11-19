@@ -7,3 +7,11 @@ export const toResult = <T, E>(fn: () => T) => {
     return Err(error as E);
   }
 };
+
+export const toResultAsync = async <T, E>(fn: () => Promise<T>) => {
+  try {
+    return Ok(await fn());
+  } catch (error) {
+    return Err(error as E);
+  }
+};
