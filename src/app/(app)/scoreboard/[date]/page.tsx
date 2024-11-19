@@ -2,16 +2,17 @@ import * as React from "react";
 import prisma from "@/lib/prisma";
 import { format } from "date-fns";
 import { TypographyLarge } from "@/components/ui/typography";
-import { ScoreboardQueryBuilder, ScoreboardResponse } from "@/lib/nbaApi";
+import { ScoreboardQueryBuilder } from "@/lib/nbaApi";
 import { InputJsonValue } from "@prisma/client/runtime/library";
 import AppBreadcrumbs from "@/components/app-breadcrumbs";
 import { validateNBAScoreboard, Event } from "@/lib/types/nbaScoreboard";
 import { toResult } from "@/lib/toResult";
 import { match, P } from "ts-pattern";
 import { Badge } from "@/components/ui/badge";
+import { CheckIcon, LoaderCircleIcon } from "lucide-react";
 
 const getScoreboard = async (date?: string) => {
-  let data = await prisma.scoreboardSummary.findUnique({
+  const data = await prisma.scoreboardSummary.findUnique({
     select: { json: true },
     where: { date },
   });
@@ -92,11 +93,19 @@ const ScoreboardEvent = ({
     <div className="aspect-video h-12 w-full rounded-lg p-2 bg-muted/50 flex gap-1 items-center justify-between">
       <TypographyLarge>{event.name}</TypographyLarge>
 
-      {event.status.type.completed ? (
-        <Badge variant="secondary">Completed</Badge>
-      ) : (
-        <Badge variant="default">In Progress</Badge>
-      )}
+      <div className="flex gap-1 items-center">
+        {event.status.type.completed ? (
+          <>
+            <Badge variant="secondary">Completed</Badge>
+            <CheckIcon />
+          </>
+        ) : (
+          <>
+            <Badge variant="default">In Progress</Badge>
+            <LoaderCircleIcon className="animate-spin" />
+          </>
+        )}
+      </div>
     </div>
   );
 };

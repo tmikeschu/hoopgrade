@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Basic schemas
-const LinkSchema = z.object({
+export const LinkSchema = z.object({
   rel: z.array(z.string()),
   href: z.string().url(),
   text: z.string().optional(),
@@ -9,7 +9,7 @@ const LinkSchema = z.object({
   isPremium: z.boolean().optional(),
 });
 
-const LogoSchema = z.object({
+export const LogoSchema = z.object({
   href: z.string().url(),
   width: z.number(),
   height: z.number(),

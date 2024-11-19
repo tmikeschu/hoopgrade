@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { LinkSchema, LogoSchema } from "./nbaScoreboard";
+import { LinkSchema } from "./nbaScoreboard";
 
 const SportLogoSchema = z.object({
   href: z.string().url(),

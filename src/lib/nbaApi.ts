@@ -1,7 +1,10 @@
 // https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard
 
-import { NBAScoreboard } from "@/lib/types/nbaScoreboard";
-import { NBASummary } from "@/lib/types/nbaSummary";
+import {
+  NBAScoreboard,
+  validateNBAScoreboard,
+} from "@/lib/types/nbaScoreboard";
+import { NBASummary, validateNBASummary } from "@/lib/types/nbaSummary";
 
 export const BASE_ESPN_API_URL = "https://site.web.api.espn.com";
 
@@ -34,7 +37,7 @@ export const ScoreboardQueryBuilder = {
       const response = await fetch(
         `${BASE_ESPN_API_URL}${V2_PATH}${SCOREBOARD_PATH}?${queryString}`
       );
-      return response.json() as Promise<ScoreboardResponse>;
+      return validateNBAScoreboard(await response.json());
     };
   },
 };
@@ -64,6 +67,6 @@ export const SummaryQueryBuilder = {
     const response = await fetch(
       `${BASE_ESPN_API_URL}${V2_PATH}${SUMMARY_PATH}?${queryString}`
     );
-    return response.json() as Promise<SummaryResponse>;
+    return validateNBASummary(await response.json());
   },
 };
