@@ -45,7 +45,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <div className="flex items-center gap-2 ">
               <Link
                 href="/"
-                className="flex items-center gap-2 px-2 hover:bg-sidebar-accent px-2 py-1 rounded"
+                className="flex items-center gap-2 hover:bg-sidebar-accent px-2 py-1 rounded"
               >
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <GalleryVerticalEnd className="size-4" />

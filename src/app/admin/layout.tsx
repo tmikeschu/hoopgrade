@@ -1,25 +1,18 @@
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { AdminSidebar } from "@/components/admin-sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { ClerkProvider } from "@clerk/nextjs";
 
-export default function RootLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <ClerkProvider>
-      <SignedOut>
-        <SignInButton />
-      </SignedOut>
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
-      {children}
+      <SidebarProvider>
+        <AdminSidebar />
+        <SidebarInset>{children}</SidebarInset>
+      </SidebarProvider>
     </ClerkProvider>
   );
 }
