@@ -31,12 +31,10 @@ const data = {
         {
           title: "Dashboard",
           url: "/admin",
-          isActive: true,
         },
         {
           title: "Event JSON",
           url: "/admin/event-json",
-          isActive: false,
         },
       ],
     },
@@ -117,8 +115,8 @@ export function AdminSidebar({
                     <SidebarMenu>
                       {item.items.map((item) => (
                         <SidebarMenuItem key={item.title}>
-                          <SidebarMenuButton asChild isActive={item.isActive}>
-                            <a href={item.url}>{item.title}</a>
+                          <SidebarMenuButton asChild href={item.url}>
+                            <Link href={item.url}>{item.title}</Link>
                           </SidebarMenuButton>
                         </SidebarMenuItem>
                       ))}

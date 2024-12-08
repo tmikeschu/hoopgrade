@@ -91,7 +91,7 @@ export default function CopyEventJson() {
 
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <Button onClick={handleCopyEventJson} variant="ghost" size="icon">
               {match(status)
                 .with("copied", () => <CheckIcon className="text-green-500" />)
