@@ -33,6 +33,11 @@ const data = {
           url: "/admin",
           isActive: true,
         },
+        {
+          title: "Event JSON",
+          url: "/admin/event-json",
+          isActive: false,
+        },
       ],
     },
   ],
