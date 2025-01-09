@@ -66,7 +66,11 @@ export default function CopyEventJson() {
       const filteredData = Object.fromEntries(
         Object.entries(data).filter(([key]) => !IGNORE_KEYS.includes(key))
       );
-      await window.navigator.clipboard.writeText(JSON.stringify(filteredData));
+      const json = JSON.stringify(filteredData);
+      // HACK for Safari
+      setTimeout(async () => {
+        await window.navigator.clipboard.writeText(json);
+      }, 0);
       setStatus("copied");
     } catch (e) {
       setStatus({
